@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/MainMenu.qml</file>
+        <file>qml/MenuIconLive.qml</file>
+        <file>qml/MyPage.qml</file>
+        <file>qml/PageAbout.qml</file>
+        <file>qml/Database.js</file>
+        <file>qml/Downloads.qml</file>
+        <file>qml/Folder.qml</file>
+        <file>qml/ItemSample.qml</file>
+        <file>qml/Joystick.qml</file>
+        <file>qml/Library.qml</file>
+        <file>qml/MyButton.qml</file>
+        <file>qml/MyText.qml</file>
+        <file>qml/Sample.qml</file>
+        <file>qml/ContextMenuItem.qml</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/background.jpg</file>
+        <file>images/icon_game.png</file>
+        <file>images/icon_info.png</file>
+        <file>images/icon_settings.png</file>
+        <file>images/shadow_long.png</file>
+        <file>images/joystick/joystick-bg.svg</file>
+        <file>images/joystick/joystick-finger.svg</file>
+        <file>images/shadow_title.png</file>
+        <file>images/item-add.png</file>
+        <file>images/item-del.png</file>
+        <file>images/item-play.png</file>
+        <file>images/icon_download.png</file>
+        <file>images/icon_lib.png</file>
+        <file>images/sample-bg.png</file>
+    </qresource>
+</RCC>
