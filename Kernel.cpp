@@ -81,6 +81,12 @@ void Kernel::buildSamples()
 
 void Kernel::buildDownloads()
 {
+    if (Sample::qmlLibrary == nullptr)
+        return;
+
+    if (Sample::qmlLibrary->objectName() != "qmlDownloads")
+        return;
+
     QMap<QString, Folder*> folders = _downloadManager.folders();
     _downloadsObject->setProperty("ready", QVariant(true));
 

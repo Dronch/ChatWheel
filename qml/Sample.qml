@@ -1,18 +1,20 @@
-import QtQuick 2.7
+import QtQuick 2.4
 import QtQuick.Controls 2.2
+//import Qt.labs.controls 1.0
 import "Database.js" as Db
 
 Item {
     id: root
     state: "lowlighted"
     anchors.centerIn: parent
-    height: signature.font.pointSize * 2
+    height: signature.font.pixelSize * 2
     z: (root.state == "highlighted" || mousearea.menuInvoked) ? 1 : 0
 
     property string name: "sample"
     property string uuid: ""
     property string category: ""
     property int pos: -1
+    property string color: "#969b9e"
 
     rotation: 0
     transformOrigin: Item.Center
@@ -38,7 +40,7 @@ Item {
 
             Text {
                 id: signature
-                color: "#006699"
+                color: root.color
                 visible: root.state == "lowlighted" && !mousearea.menuInvoked
                 text: root.name
                 verticalAlignment: Text.AlignVCenter
@@ -53,6 +55,7 @@ Item {
                 height: signature.height
                 width: parent.width
                 visible: root.state == "highlighted"  || mousearea.menuInvoked
+                textColor: root.color
             }
         }
 
@@ -142,6 +145,7 @@ Item {
 
             Menu{
                 id: sampleMenu
+                width: root.width / 3
                 Repeater {
                     model: sampleItems
                     MenuItem {

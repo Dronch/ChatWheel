@@ -49,6 +49,7 @@ Item {
                     name: model.name;
                     uuid: model.uuid;
                     category: list.folder
+                    height: list.itemHeight
                     width: parent.width;
                     onSignalDel: list.delItem(uuid)
                     Component.onCompleted: list.signalReady(this)

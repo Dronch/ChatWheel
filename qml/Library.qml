@@ -1,5 +1,5 @@
-import QtQuick 2.5
-import QtQuick.Controls 1.3
+import QtQuick 2.4
+import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.1
 import "Database.js" as Db
 
@@ -9,7 +9,6 @@ MyPage {
 
     title: qsTr("Library")
 
-
     property bool ready: false
     property int itemHeight: root.height / 5
 
@@ -17,110 +16,120 @@ MyPage {
 
     BusyIndicator {
         z: 1
-        anchors.fill: parent
         anchors.centerIn: parent
 
+        visible: root.ready == false
         running: root.ready == false
     }
 
-    Rectangle {
-        color: "transparent"
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        anchors.right: parent.horizontalCenter
-        anchors.rightMargin: 5
-        anchors.leftMargin: 5
 
-       ListModel {
-           id: foldersListModel
-       }
+    SwipeView {
+        id: view
+        currentIndex: 0
+        anchors.fill: parent
 
-       ListView {
-           id: foldersView
-           model: foldersListModel
-           anchors.fill: parent
-           clip: true
-           delegate: Component {
-               Item {
-                   width: parent.width
-                   height: root.itemHeight
-
-                   Column {
-                       id: col
-                       anchors.fill: parent
-                       spacing: 2
-                   Image {
-                       anchors.horizontalCenter: parent.horizontalCenter
-                       height: parent.height - signature.height - col.spacing
-                       width: parent.height - signature.height - col.spacing
-                       source: "image://icons/" + name
-                   }
-                   Text {
-                       id: signature
-                       anchors.horizontalCenter: parent.horizontalCenter
-                       text: name
-                       verticalAlignment: Text.AlignBottom
-                       horizontalAlignment: Text.AlignHCenter
-                       font.pointSize: 10
-                       color: "#006699"
-                   }
-                   }
-
-                   MouseArea {
-                       anchors.fill: parent
-                       onClicked: foldersView.currentIndex = index
-                   }
-               }
-           }
-           highlight: Rectangle {
-               color: "#93bcd1"
-           }
-           onCurrentItemChanged: container.choosed(foldersListModel.get(foldersView.currentIndex).name)
-       }
-    }
-
-    Rectangle {
-        id: list
-        color: "transparent"
-        anchors.left: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.leftMargin: 5
 
         Item {
-            objectName: "qmlContainer"
-            id: container
-            anchors.fill: parent
+            Rectangle {
+                color: "transparent"
+                width: parent.width * 0.9
+                height: parent.height * 0.9
+                x: parent.width * 0.05
+                y: parent.height * 0.05
 
-            function load(folder, items)
-            {
-                var component = Qt.createComponent("Folder.qml");
-
-                if (component.status == Component.Ready)
-                {
-                    var obj = component.createObject(container, {"folder": folder, "visible": false, "onlyInLib": true, "itemHeight": root.itemHeight})
-                    obj.init(items)
-                    obj.signalEmpty.connect(delFolder)
+                ListModel {
+                    id: foldersListModel
                 }
-            }
 
-            function choosed(folder)
-            {
-                for (var i = 0; i < container.children.length; i++)
-                    container.children[i].visible = container.children[i].folder == folder;
-            }
+                ListView {
+                    id: foldersView
+                    highlightMoveVelocity: -1
+                    model: foldersListModel
+                    anchors.fill: parent
+                    clip: true
+                    delegate: Component {
+                        Item {
+                            width: parent.width
+                            height: root.itemHeight
 
-            function clear()
-            {
-                for (var i = 0; i < container.children.length; i++)
-                    container.children[i].destroy();
+                            Row {
+                                id: row
+                                anchors.fill: parent
+                                spacing: 10
+                                Image {
+                                    id: img
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    height: parent.height - signature.height - row.spacing
+                                    width: parent.height - signature.height - row.spacing
+                                    source: "image://icons/" + name
+                                }
+                                Text {
+                                    id: signature
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    text: name
+                                    verticalAlignment: Text.AlignVCenter
+                                    horizontalAlignment: Text.AlignHCenter
+                                    font.pointSize: 18
+                                    color: "#006699"
+                                }
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: { foldersView.currentIndex = index; view.currentIndex = 1; }
+                            }
+                        }
+                    }
+                    highlight: Rectangle {
+                        color: "#93bcd1"
+                    }
+                    onCurrentItemChanged: { container.choosed(foldersListModel.get(foldersView.currentIndex).name); view.currentIndex = 0 }
+                }
             }
         }
 
-     }
+        Item {
+            Rectangle {
+                color: "transparent"
+                width: parent.width * 0.9
+                height: parent.height * 0.9
+                x: parent.width * 0.05
+                y: parent.height * 0.05
+
+                Item {
+                    objectName: "qmlContainer"
+                    id: container
+                    width: parent.width
+                    height: parent.height
+
+                    function load(folder, items)
+                    {
+                        var component = Qt.createComponent("Folder.qml");
+
+                        if (component.status == Component.Ready)
+                        {
+                            var obj = component.createObject(container, {"folder": folder, "visible": false, "onlyInLib": true, "itemHeight": root.itemHeight / 3})
+                            obj.init(items)
+                            obj.signalEmpty.connect(delFolder)
+                        }
+                    }
+
+                    function choosed(folder)
+                    {
+                        for (var i = 0; i < container.children.length; i++)
+                            container.children[i].visible = container.children[i].folder == folder;
+                    }
+
+                    function clear()
+                    {
+                        for (var i = 0; i < container.children.length; i++)
+                            container.children[i].destroy();
+                    }
+                }
+            }
+        }
+    }
+
 
     function delFolder(name)
     {
@@ -132,7 +141,7 @@ MyPage {
             }
     }
 
-    Component.onCompleted: Db.init()
+    Component.onCompleted: Db.init();
 
     function contains(uuid)
     {

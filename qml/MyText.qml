@@ -2,6 +2,7 @@ import QtQuick 2.0
 
 Rectangle{
     id: root
+    property string textColor: "#006699"
     color: "transparent"
     clip: true
     state: moving_text.text.length * moving_text.font.pointSize > root.width ? "long-text" : "short-text"
@@ -21,7 +22,7 @@ Rectangle{
         id:moving_text
         text: root.text
         font.pointSize: 18
-        color: "#006699"
+        color: root.textColor
 
         SequentialAnimation on x {
             id: longTextAnim

@@ -4,7 +4,7 @@ import QtQuick.Controls 2.2
 
 Item {
     id: root
-    height: 40
+    height: parent.height
     state: "ready"
 
     property string name: "sample"
@@ -12,6 +12,7 @@ Item {
     property string category: ""
     property bool inLib: false
     property bool choosed: false
+    property string color: "#006699"
 
     signal signalPlay()
     signal signalStop()
@@ -28,6 +29,7 @@ Item {
         visible: root.choosed
         width: parent.width - btns.width
         height: parent.height
+        textColor: root.color
     }
 
     Text {
@@ -39,7 +41,7 @@ Item {
         visible: !root.choosed
         height: parent.height
         font.pointSize: 18
-        color: "#006699"
+        color: root.color
     }
 
 

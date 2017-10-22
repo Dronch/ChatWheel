@@ -1,5 +1,5 @@
 import QtQuick 2.4
-import QtQuick.Controls 1.3
+import QtQuick.Controls 1.2
 import "Database.js" as Db
 
 MyPage {
@@ -22,6 +22,60 @@ MyPage {
         visible: root.ready == false
 
         running: root.ready == false
+    }
+
+    MouseArea {
+        id: mouse
+        property real fingerAngle : Math.atan2(mouseX, mouseY)
+        property int mcx : mouseX - joystick.width * 0.5
+        property int mcy : mouseY - joystick.height * 0.5
+        property bool fingerInBounds : fingerDistance2 < distanceBound2
+        property real fingerDistance2 : mcx * mcx + mcy * mcy
+        property real distanceBound : joystick.width * 0.5 - thumb.width * 0.5
+        property real distanceBound2 : distanceBound * distanceBound
+
+        property double signal_x : (mouseX - joystick.width/2) / distanceBound
+        property double signal_y : -(mouseY - joystick.height/2) / distanceBound
+
+        property bool activated: false
+
+        anchors.fill: parent
+
+        onPressed: {
+            returnAnimation.stop();
+
+            mcx = mouseX - width * 0.5
+            mcy = mouseY - height * 0.5
+
+            activated = fingerInBounds
+            handleThumbPos()
+        }
+
+        onReleased: {
+            container.release()
+            returnAnimation.restart()
+            activated = false
+        }
+
+        onPositionChanged: handleThumbPos()
+
+        function handleThumbPos() {
+            if (activated)
+            {
+                mcx = mouseX - width * 0.5
+                mcy = mouseY - height * 0.5
+                if (fingerInBounds) {
+                    thumb.anchors.horizontalCenterOffset = mcx
+                    thumb.anchors.verticalCenterOffset = mcy
+                } else {
+                    var angle = Math.atan2(mcy, mcx)
+                    thumb.anchors.horizontalCenterOffset = Math.cos(angle) * distanceBound
+                    thumb.anchors.verticalCenterOffset = Math.sin(angle) * distanceBound
+                }
+
+                container.checkActivation();
+            }
+        }
     }
 
     Rectangle{
@@ -47,55 +101,6 @@ MyPage {
                     to: 0; duration: 200; easing.type: Easing.OutSine }
                 NumberAnimation { target: thumb.anchors; property: "verticalCenterOffset";
                     to: 0; duration: 200; easing.type: Easing.OutSine }
-            }
-
-            MouseArea {
-                id: mouse
-                property real fingerAngle : Math.atan2(mouseX, mouseY)
-                property int mcx : mouseX - width * 0.5
-                property int mcy : mouseY - height * 0.5
-                property bool fingerInBounds : fingerDistance2 < distanceBound2
-                property real fingerDistance2 : mcx * mcx + mcy * mcy
-                property real distanceBound : width * 0.5 - thumb.width * 0.5
-                property real distanceBound2 : distanceBound * distanceBound
-
-                property double signal_x : (mouseX - joystick.width/2) / distanceBound
-                property double signal_y : -(mouseY - joystick.height/2) / distanceBound
-
-                anchors.fill: parent
-
-                onPressed: {
-                    handleThumbPos()
-                    returnAnimation.stop();
-                }
-
-                onReleased: {
-                    container.release()
-                    returnAnimation.restart()
-                }
-
-                onPositionChanged: handleThumbPos()
-
-                function handleThumbPos() {
-                    mcx = mouseX - width * 0.5
-                    mcy = mouseY - height * 0.5
-                    if (fingerInBounds) {
-                        thumb.anchors.horizontalCenterOffset = mcx
-                        thumb.anchors.verticalCenterOffset = mcy
-                    } else {
-                        var angle = Math.atan2(mcy, mcx)
-                        thumb.anchors.horizontalCenterOffset = Math.cos(angle) * distanceBound
-                        thumb.anchors.verticalCenterOffset = Math.sin(angle) * distanceBound
-                    }
-
-                    if (Math.sqrt(Math.pow((mcx), 2) + Math.pow((mcy), 2)) > width * 0.5)
-                    {
-                        thumb.anchors.horizontalCenterOffset = 0;
-                        thumb.anchors.verticalCenterOffset = 0;
-                    }
-
-                    container.checkActivation();
-                }
             }
 
             Image {
