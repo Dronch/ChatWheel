@@ -14,7 +14,7 @@ Item {
     property string uuid: ""
     property string category: ""
     property int pos: -1
-    property string color: "#969b9e"
+    property color color: "#969b9e"
 
     rotation: 0
     transformOrigin: Item.Center

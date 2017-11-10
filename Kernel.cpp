@@ -54,6 +54,8 @@ void Kernel::qmlObjectsSet(QObject *qmlObject, QMap<QString, Sample*> &samples)
 
 void Kernel::samplesClear()
 {
+    _downloadManager.clear();
+
     foreach (Sample* sample, _samples)
         delete sample;
 
@@ -149,8 +151,8 @@ void Kernel::buildLibraryList()
 void Kernel::componentReady(QVariant obj)
 {
     QObject* qmlObject = obj.value<QObject*>();
-    QString name = qmlObject->objectName();
     Sample::qmlLibrary = qmlObject;
+    QString name = qmlObject->objectName();
     samplesClear();
 
     if (name == "qmlDownloads")

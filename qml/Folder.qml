@@ -12,6 +12,9 @@ Item {
     property string folder: ""
     property bool onlyInLib: false
 
+    property color textColor: "#006699"
+    property color highlightColor: "#93bcd1"
+
     function delItem(uuid)
     {
         if (onlyInLib)
@@ -54,6 +57,7 @@ Item {
                     onSignalDel: list.delItem(uuid)
                     Component.onCompleted: list.signalReady(this)
                     choosed: listView.currentIndex == index
+                    color: list.textColor
                 }
 
                 MouseArea {
@@ -65,7 +69,7 @@ Item {
         }
 
         highlight: Rectangle {
-            color: "#93bcd1"
+            color: list.highlightColor
         }
     }
 

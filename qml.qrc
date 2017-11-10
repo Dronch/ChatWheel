@@ -14,5 +14,6 @@
         <file>qml/MyButton.qml</file>
         <file>qml/MyText.qml</file>
         <file>qml/Sample.qml</file>
+        <file>qml/MySettings.qml</file>
     </qresource>
 </RCC>

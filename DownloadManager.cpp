@@ -11,24 +11,34 @@ DownloadManager::DownloadManager(QObject *parent) :
 
 }
 
-void DownloadManager::downloadSamplesPreviewList()
+void DownloadManager::clear()
 {
     _folders.clear();
     _progress = 0;
 
+    foreach (QObject* obj, _downloaders)
+        delete obj;
+
+    _downloaders.clear();
+}
+
+void DownloadManager::downloadSamplesPreviewList()
+{
+    clear();
     Downloader* downloader = new Downloader();
     connect(downloader, SIGNAL(downloaded()), this, SLOT(downloadSamplesPreviewListCompleted()));
-    connect(downloader, SIGNAL(errDownload()), downloader, SLOT(deleteLater()));
     downloader->Download(QUrl("http://" + tr(HOST)));
+    _downloaders.append(downloader);
 }
 
 void DownloadManager::downloadSamplesPreviewListCompleted()
 {
+    if (Sample::qmlLibrary == nullptr)
+        return;
+
     Downloader* downloader = qobject_cast<Downloader*>(sender());
 
     QString strReply = (QString)downloader->downloadedData();
-
-    downloader->deleteLater();
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(strReply.toUtf8());
 
@@ -55,6 +65,7 @@ void DownloadManager::downloadSamplesPreviewListCompleted()
         connect(downloader, SIGNAL(downloaded()), this, SLOT(downloadFolderIconCompleted()));
         connect(downloader, SIGNAL(errDownload()), this, SLOT(downloadFolderIconErr()));
         downloader->Download(QUrl("http://" + tr(HOST) + "/category/" + folder->name()));
+        _downloaders.append(downloader);
     }
 }
 
@@ -63,11 +74,10 @@ void DownloadManager::downloadFolderIconCompleted()
     Downloader* downloader = qobject_cast<Downloader*>(sender());
     QByteArray data = downloader->downloadedData();
     QString name = downloader->property("foldername").toString();
-    downloader->deleteLater();
 
     QPixmap pixmap;
 
-    if(pixmap.loadFromData(data, "PNG"))
+    if(pixmap.loadFromData(data, "PNG") && _folders.contains(name))
        _folders[name]->setIcon(pixmap);
 
     if (++_progress == _folders.count())
@@ -76,8 +86,6 @@ void DownloadManager::downloadFolderIconCompleted()
 
 void DownloadManager::downloadFolderIconErr()
 {
-    sender()->deleteLater();
-
     if (++_progress == _folders.count())
         emit downloaded();
 }

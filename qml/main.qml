@@ -21,19 +21,20 @@ ApplicationWindow {
     property alias dp: device.dp
     MyDevice { id: device }
 
+    MySettings { id: mysettings }
+
     QtObject {
         id: palette
-        //http://www.materialpalette.com/indigo/yellow
-        property color darkPrimary: "#303F9F"
-        property color primary: "#3F51B5"
-        property color lightPrimary: "#C5CAE9"
-        property color text: "#FFFFFF"
-        property color accent: "#FFEB3B"
-        property color primaryText: "#212121"
-        property color secondaryText: "#727272"
-        property color divider: "#B6B6B6"
+        property color darkPrimary: mysettings.darkPrimary
+        property color primary: mysettings.primary
+        property color lightPrimary: mysettings.lightPrimary
+        property color text: mysettings.text
+        property color accent: mysettings.accent
+        property color primaryText: mysettings.primaryText
+        property color secondaryText: mysettings.secondaryText
+        property color divider: mysettings.divider
 
-        property color currentHighlightItem: "#dcdcdc"
+        property color currentHighlightItem: mysettings.currentHighlightItem
     }
 
 

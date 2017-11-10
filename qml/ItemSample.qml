@@ -12,7 +12,7 @@ Item {
     property string category: ""
     property bool inLib: false
     property bool choosed: false
-    property string color: "#006699"
+    property color color: "#006699"
 
     signal signalPlay()
     signal signalStop()

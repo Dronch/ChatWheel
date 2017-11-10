@@ -8,6 +8,8 @@ MyPage {
 
     title: qsTr("Chat wheel")
 
+    MySettings { id: mysettings }
+
     property url background: "qrc:/images/joystick/joystick-bg.svg"
     property url finger: "qrc:/images/joystick/joystick-finger.svg"
 
@@ -160,7 +162,8 @@ MyPage {
                         component.createObject(container, {"name": itemHasSample ? items[j].name : "",
                                                            "uuid": itemHasSample ? items[j].uuid : "NONE " + i,
                                                            "category": itemHasSample ? items[j].category : "",
-                                                           "pos": i});
+                                                           "pos": i,
+                                                           "color": mysettings.joysticTextColor});
 
                     }
 

@@ -14,9 +14,12 @@ public:
 
     QMap<QString, Folder*> folders() { return _folders; }
 
+    void clear();
+
 private:
     QMap<QString, Folder*> _folders;
     int _progress;
+    QList<QObject*> _downloaders;
 
 signals:
     void downloaded();

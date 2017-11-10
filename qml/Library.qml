@@ -9,8 +9,13 @@ MyPage {
 
     title: qsTr("Library")
 
+    MySettings { id: mysettings }
+
     property bool ready: false
     property int itemHeight: root.height / 5
+
+    property color textColor: mysettings.textColor
+    property color highlightColor: mysettings.highlightColor
 
     signal signalClear()
 
@@ -70,7 +75,7 @@ MyPage {
                                     verticalAlignment: Text.AlignVCenter
                                     horizontalAlignment: Text.AlignHCenter
                                     font.pointSize: 18
-                                    color: "#006699"
+                                    color: root.textColor
                                 }
                             }
 
@@ -81,7 +86,7 @@ MyPage {
                         }
                     }
                     highlight: Rectangle {
-                        color: "#93bcd1"
+                        color: root.highlightColor
                     }
                     onCurrentItemChanged: { container.choosed(foldersListModel.get(foldersView.currentIndex).name); view.currentIndex = 0 }
                 }
@@ -108,7 +113,12 @@ MyPage {
 
                         if (component.status == Component.Ready)
                         {
-                            var obj = component.createObject(container, {"folder": folder, "visible": false, "onlyInLib": true, "itemHeight": root.itemHeight / 3})
+                            var obj = component.createObject(container, {"folder": folder,
+                                                                         "visible": false,
+                                                                         "onlyInLib": true,
+                                                                         "itemHeight": root.itemHeight / 3,
+                                                                         "textColor": root.textColor,
+                                                                         "highlightColor": root.highlightColor})
                             obj.init(items)
                             obj.signalEmpty.connect(delFolder)
                         }
