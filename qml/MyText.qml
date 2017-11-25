@@ -5,9 +5,11 @@ Rectangle{
     property string textColor: "#006699"
     color: "transparent"
     clip: true
-    state: moving_text.text.length * moving_text.font.pointSize > root.width ? "long-text" : "short-text"
-    onWidthChanged: root.state = moving_text.text.length * moving_text.font.pointSize > root.width ?
-                        "long-text" : "short-text"
+//    state: moving_text.text.length * moving_text.font.pointSize > root.width ? "long-text" : "short-text"
+//    onWidthChanged: root.state = moving_text.text.length * moving_text.font.pointSize > root.width ?
+//                        "long-text" : "short-text"
+    state: moving_text.contentWidth > root.width ? "long-text" : "short-text"
+    onWidthChanged: root.state = moving_text.contentWidth > root.width ? "long-text" : "short-text"
 
 
     property string text: ""
@@ -47,11 +49,13 @@ Rectangle{
             }
             PropertyChanges {
                 target: forward
-                to: root.width - moving_text.text.length * moving_text.font.pointSize
+                //to: root.width - moving_text.text.length * moving_text.font.pointSize
+                to: root.width - moving_text.contentWidth
             }
             PropertyChanges {
                 target: backward
-                to: root.width / 2
+                //to: root.width / 2
+                to: 0
             }
         },
         State {

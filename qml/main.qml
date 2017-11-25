@@ -53,8 +53,6 @@ ApplicationWindow {
         id: settings
     }
 
-    property string version: "2015100901"
-
     property alias currentPage: loader.source
 
     property int durationOfMenuAnimation: 500

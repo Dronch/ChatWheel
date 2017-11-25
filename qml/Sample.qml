@@ -107,6 +107,7 @@ Item {
 
             Menu{
                 id: folderMenu
+                width: root.parent.parent.width
                 MenuItem
                 {
                     text: "..."
@@ -145,7 +146,7 @@ Item {
 
             Menu{
                 id: sampleMenu
-                width: root.width / 3
+                width: root.parent.parent.width
                 Repeater {
                     model: sampleItems
                     MenuItem {

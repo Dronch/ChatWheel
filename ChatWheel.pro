@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick svg multimedia network
+QT += qml quick multimedia network
 CONFIG += c++11
 
 android: {

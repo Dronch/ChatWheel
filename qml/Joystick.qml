@@ -10,8 +10,9 @@ MyPage {
 
     MySettings { id: mysettings }
 
-    property url background: "qrc:/images/joystick/joystick-bg.svg"
-    property url finger: "qrc:/images/joystick/joystick-finger.svg"
+    property url background: "qrc:/images/joystick/joystick-bg.png"
+    property url finger: "qrc:/images/joystick/joystick-finger.png"
+    property url glow: "qrc:/images/joystick/joystick-glow.png"
 
     signal signalClear()
 
