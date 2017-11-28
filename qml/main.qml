@@ -8,7 +8,7 @@ import mydevice 1.0
 ApplicationWindow {
     id: app
 
-    property string appTitle: "Template"
+    property string appTitle: "Chat wheel"
     signal componentCreated(variant obj)
 
     width: 360
@@ -68,7 +68,7 @@ ApplicationWindow {
         y: 0
         width: parent.width
         height: parent.height
-        color: "white"
+        color: palette.lightPrimary
 
         //*************************************************//
         Rectangle {
@@ -127,6 +127,7 @@ ApplicationWindow {
             height: parent.height - menuBar.height
             width: menuWidth
             z: 3
+            color: palette.lightPrimary
             property bool itemClicked: false
             MainMenu {
                 id: mainMenu

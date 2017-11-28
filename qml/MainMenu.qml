@@ -125,7 +125,7 @@ Item {
                 anchors.leftMargin: 0.7*imgItem.width
                 text: textItemMenu( item )
                 font.pixelSize: parent.height*0.3
-                color: wrapperItem.ListView.isCurrentItem ? palette.darkPrimary : palette.primaryText
+                color: palette.primaryText//wrapperItem.ListView.isCurrentItem ? palette.darkPrimary : palette.primaryText
             }
 
 

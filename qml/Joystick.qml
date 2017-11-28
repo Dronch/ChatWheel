@@ -34,7 +34,7 @@ MyPage {
         property int mcy : mouseY - joystick.height * 0.5
         property bool fingerInBounds : fingerDistance2 < distanceBound2
         property real fingerDistance2 : mcx * mcx + mcy * mcy
-        property real distanceBound : joystick.width * 0.5 - thumb.width * 0.5
+        property real distanceBound : joystick.width * 0.5 - thumb.width * 0.5 - 0.5 * joystick.width / 4
         property real distanceBound2 : distanceBound * distanceBound
 
         property double signal_x : (mouseX - joystick.width/2) / distanceBound
@@ -88,14 +88,14 @@ MyPage {
         anchors.centerIn: parent
         width: (parent.width > parent.height ? parent.height : parent.width) * 0.6
         height: root.width
-        Image {
+        Rectangle {
             id: joystick
             anchors.fill: parent
+            color: "transparent"
 
             property real angle : 0
             property real distance : 0
 
-            source: game.background
             anchors.centerIn: parent
 
             ParallelAnimation {
@@ -107,11 +107,28 @@ MyPage {
             }
 
             Image {
+                anchors.fill: parent
+                source: game.background
+                anchors.centerIn: parent
+                z:1
+            }
+
+            Image {
                 id: thumb
                 width: joystick.width / 5
                 height: joystick.height / 5
                 source: game.finger
                 anchors.centerIn: parent
+                z:1
+            }
+
+            Image {
+                z: 0
+                width: 3 * thumb.width
+                height: 3 * thumb.height
+                source: game.glow
+                visible: mouse.activated
+                anchors.centerIn: thumb
             }
         }
 
