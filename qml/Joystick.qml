@@ -34,7 +34,7 @@ MyPage {
         property int mcy : mouseY - joystick.height * 0.5
         property bool fingerInBounds : fingerDistance2 < distanceBound2
         property real fingerDistance2 : mcx * mcx + mcy * mcy
-        property real distanceBound : joystick.width * 0.5 - thumb.width * 0.5 - 0.5 * joystick.width / 4
+        property real distanceBound : joystick.width * 0.5 - thumb.width * 0.5 - 0.5 * joystick.width / 3
         property real distanceBound2 : distanceBound * distanceBound
 
         property double signal_x : (mouseX - joystick.width/2) / distanceBound
@@ -196,7 +196,7 @@ MyPage {
             {
                 var x = thumb.anchors.horizontalCenterOffset;
                 var y = thumb.anchors.verticalCenterOffset;
-                var triggerLength = width / 5 + (root.width / 2) / 2;
+                var triggerLength = width / 5 + (root.width / 2) / 2 + 0.5 * joystick.width / 5;
                 var minLength = triggerLength * 2;
                 var index = -1;
                 for (var i = 0; i < children.length; i++)
@@ -267,5 +267,22 @@ MyPage {
     {
         container.clear()
         game.ready = false
+    }
+
+    function debug(d_text)
+    {
+        t_debug.visible = true
+        t_debug.text = d_text
+    }
+
+    Text {
+        id: t_debug
+        visible: false
+        text: ""
+        color: "green"
+    }
+
+    function back()
+    {
     }
 }

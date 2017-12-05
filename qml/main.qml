@@ -62,6 +62,11 @@ ApplicationWindow {
     property real menuProgressOpening
 
 
+    onClosing: {
+        close.accepted = false
+    }
+
+
     Rectangle {
         id: normalView
         x: 0
@@ -69,6 +74,18 @@ ApplicationWindow {
         width: parent.width
         height: parent.height
         color: palette.lightPrimary
+
+        focus: true
+        Keys.onReleased: {
+            if (event.key == Qt.Key_Back) {
+                if(app.menuIsShown)
+                    app.onMenu()
+                else
+                    loader.item.back()
+                event.accepted=true;
+            }
+        }
+
 
         //*************************************************//
         Rectangle {

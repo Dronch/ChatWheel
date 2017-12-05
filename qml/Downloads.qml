@@ -174,4 +174,22 @@ MyPage {
         root.ready = false
         signalClear()
     }
+
+    function debug(d_text)
+    {
+        t_debug.visible = true
+        t_debug.text = d_text
+    }
+
+    Text {
+        id: t_debug
+        visible: false
+        text: ""
+        color: "green"
+    }
+
+    function back()
+    {
+        view.currentIndex = 0
+    }
 }

@@ -29,12 +29,12 @@ Item {
     Image {
         source: "qrc:/images/sample-bg.png"
         anchors.fill: parent
-        scale: (root.state == "highlighted" || mousearea.menuInvoked) ? 1.4 : 1
+        scale: (root.state == "highlighted" || mousearea.menuInvoked) ? 1.3 : 1
 
         Rectangle{
             color:"transparent"
             clip: true
-            width: parent.width * 0.9
+            width: parent.width * 0.8
             height: root.height
             anchors.centerIn: parent
 

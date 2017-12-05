@@ -65,6 +65,14 @@ void Sample::delFile()
 
 void Sample::play()
 {
+#ifdef QT_DEBUG
+    QString debug = "Debug\n" + _uuid;
+    if (_sound)
+        debug += tr("\n") + _sound->fileName();
+    if (_qmlObject == nullptr)
+        debug += tr("\n") + "qmlObject = null";
+    QMetaObject::invokeMethod(qmlLibrary, "debug", Q_ARG(QVariant, QVariant::fromValue(debug)));
+#endif
     if (hasSound())
     {
         _sound->play();

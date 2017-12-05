@@ -5,6 +5,7 @@ import QtQuick.Dialogs 1.2
 
 Rectangle {
     id: page
+    focus: true
 
     MySettings { id: mysettings }
 

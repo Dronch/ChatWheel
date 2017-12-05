@@ -8,15 +8,15 @@ Item {
     property color lightPrimary: "#ff9e40"
     property color text: "#FFFFFF"
     property color accent: "#FFEB3B"
-    property color primaryText: "#212121"
+    property color primaryText: "#FFFFFF"
     property color secondaryText: "#FFFFFF"
-    property color divider: "#ff9e40"
+    property color divider: lightPrimary
 
-    property color currentHighlightItem: "#ff6d00"
+    property color currentHighlightItem: primary
 
     // download page or library page list
-    property color textColor: "#212121"
-    property color highlightColor: "#ff6d00"
+    property color textColor: "#FFFFFF"
+    property color highlightColor: primary
 
     // joystick
     property color joysticTextColor: "#FFFFFF"

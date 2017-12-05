@@ -3,7 +3,7 @@ import QtQuick 2.0
 Item {
     id: button
     property alias imgSrc: image.source
-    scale: state === "Pressed" ? 0.9 : 1.0
+    scale: state === "Pressed" ? 0.75 : 1.0
     onEnabledChanged: state = ""
     signal clicked
 

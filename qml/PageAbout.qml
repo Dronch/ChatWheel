@@ -33,4 +33,9 @@ MyPage {
     {
         Db.insertIcon(name, data)
     }
+
+    function back()
+    {
+
+    }
 }
